@@ -115,7 +115,7 @@ main() {
         fi
 
         msg_ok "Device is supported. Ready to proceed."
-        printf "${BOLD}Press Enter to start bypass...${RESET}"
+        printf "%sPress Enter to start bypass...${RESET}"
         read -r
     fi
 

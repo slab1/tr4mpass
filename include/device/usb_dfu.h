@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include <libusb.h>
+#include <libusb-1.0/libusb.h>
 
 /* Apple USB identifiers */
 #define APPLE_VID       0x05AC

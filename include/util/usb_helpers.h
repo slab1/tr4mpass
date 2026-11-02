@@ -2,7 +2,7 @@
 #define USB_HELPERS_H
 
 #include <stdint.h>
-#include <libusb.h>
+#include <libusb-1.0/libusb.h>
 
 /*
  * Perform a USB control transfer with a data stage.

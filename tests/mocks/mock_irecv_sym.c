@@ -31,7 +31,7 @@ void irecv_set_debug_level(int level)
     (void)level;
 }
 
-irecv_error_t irecv_open_with_ecid(irecv_client_t *client, uint64_t ecid)
+irecv_error_t irecv_open_with_ecid(irecv_client_t *client, unsigned long long ecid)
 {
     struct irecv_client_private *c;
     int i;
@@ -63,11 +63,8 @@ irecv_error_t irecv_open_with_ecid(irecv_client_t *client, uint64_t ecid)
     if (!c)
         return (irecv_error_t)-2;
     c->magic         = IRECV_MAGIC;
-    c->info.pid      = (uint16_t)g_irecv_info_pid;
     c->info.ecid     = ecid != 0 ? ecid : g_irecv_info_ecid;
     c->info.cpid     = 0x8020;
-    c->info.have_ecid = 1;
-    c->info.have_cpid = 1;
     snprintf(c->serial_buf, sizeof(c->serial_buf), "%s",
              g_irecv_info_serial);
     c->info.serial_string = c->serial_buf;
@@ -76,7 +73,7 @@ irecv_error_t irecv_open_with_ecid(irecv_client_t *client, uint64_t ecid)
 }
 
 irecv_error_t irecv_open_with_ecid_and_attempts(irecv_client_t *client,
-                                                uint64_t ecid, int attempts)
+                                                unsigned long long ecid, int attempts)
 {
     (void)attempts;
     return irecv_open_with_ecid(client, ecid);
@@ -151,7 +148,7 @@ irecv_error_t irecv_send_command_breq(irecv_client_t client,
 }
 
 irecv_error_t irecv_send_file(irecv_client_t client, const char *filename,
-                              unsigned int options)
+                              int options)
 {
     struct stat st;
     size_t size = 0;
@@ -237,3 +234,14 @@ irecv_error_t irecv_reboot(irecv_client_t client)
     mock_log_append("irecv_reboot");
     return (irecv_error_t)0;
 }
+
+irecv_error_t irecv_send_buffer(irecv_client_t client,
+                                unsigned char *buffer,
+                                unsigned long length,
+                                int dfu_notify_finished)
+{
+    (void)client; (void)buffer; (void)length; (void)dfu_notify_finished;
+    mock_log_append("irecv_send_buffer(len=%lu)");
+    return (irecv_error_t)0;
+}
+

@@ -45,6 +45,9 @@ static inline void tp_plist_mem_free(void *p)
 #else
     /* Pre-2.3: 3-arg form; format_out is ignored because the older
      * API cannot report the parsed format.
+     * On systems where plist_from_memory has 4 args but TP_PLIST_HAS_FMT_ARG
+     * is not set, we still call the 4-arg form with a NULL format pointer
+     * to avoid a signature mismatch.
      */
     static inline int tp_plist_from_memory(const char *data,
                                            uint32_t length,
@@ -52,7 +55,7 @@ static inline void tp_plist_mem_free(void *p)
                                            void *fmt_out)
     {
         (void)fmt_out;
-        return (int)plist_from_memory(data, length, out);
+        return (int)plist_from_memory(data, length, out, NULL);
     }
 #endif
 

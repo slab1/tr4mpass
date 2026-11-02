@@ -9,7 +9,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <libusb.h>
+#include <libusb-1.0/libusb.h>
 #include "compat/libirecovery_compat.h"
 
 #include "bypass/path_b.h"

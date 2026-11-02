@@ -20,12 +20,12 @@ msg_info() { printf "${CYAN}[*]${RESET} %s\n" "$1"; }
 msg_warn() { printf "${YELLOW}[!]${RESET} %s\n" "$1"; }
 
 print_banner() {
-    printf "${BOLD}"
+    printf "%s" "${BOLD}"
     echo "========================================"
     echo "  tr4mpass v0.2.0"
     echo "  Activation lock bypass research tool"
     echo "========================================"
-    printf "${RESET}\n"
+    printf "%s\n" "${RESET}"
 }
 
 # ------------------------------------------------------------------ #
@@ -107,7 +107,7 @@ install_deps_macos() {
 
     local brew_pkgs="libimobiledevice libirecovery libusb libplist openssl curl pkg-config libssh2"
     msg_info "Installing dependencies via Homebrew..."
-    brew install $brew_pkgs
+    brew install "$brew_pkgs"
     msg_ok "Homebrew dependencies installed."
 }
 
@@ -151,35 +151,35 @@ install_deps_linux_apt() {
     apt_pkgs="libimobiledevice-dev $irecovery_pkg libusb-1.0-0-dev libplist-dev libssl-dev $curl_dev_pkg libssh2-1-dev pkg-config build-essential usbutils usbmuxd"
     msg_info "Installing dependencies via apt..."
     sudo apt-get update -qq
-    sudo apt-get install -y $apt_pkgs
+    sudo apt-get install -y "$apt_pkgs"
     msg_ok "APT dependencies installed."
 }
 
 install_deps_linux_dnf() {
     local dnf_pkgs="libimobiledevice-devel libirecovery-devel libusb1-devel libplist-devel openssl-devel libcurl-devel libssh2-devel pkg-config gcc make"
     msg_info "Installing dependencies via dnf..."
-    sudo dnf install -y $dnf_pkgs
+    sudo dnf install -y "$dnf_pkgs"
     msg_ok "DNF dependencies installed."
 }
 
 install_deps_linux_pacman() {
     local pacman_pkgs="libimobiledevice libirecovery libusb libplist openssl libssh2 curl pkgconf base-devel"
     msg_info "Installing dependencies via pacman..."
-    sudo pacman -S --needed --noconfirm $pacman_pkgs
+    sudo pacman -S --needed --noconfirm "$pacman_pkgs"
     msg_ok "pacman dependencies installed."
 }
 
 install_deps_linux_zypper() {
     local zypper_pkgs="libimobiledevice-devel libirecovery-devel libusb-1_0-devel libplist-2_0-devel openssl-devel libssh2-devel libcurl-devel pkg-config gcc make"
     msg_info "Installing dependencies via zypper..."
-    sudo zypper install -y $zypper_pkgs
+    sudo zypper install -y "$zypper_pkgs"
     msg_ok "zypper dependencies installed."
 }
 
 install_deps_linux_apk() {
     local apk_pkgs="libimobiledevice-dev libirecovery-dev libusb-dev libplist-dev openssl-dev libssh2-dev curl-dev pkgconfig gcc make musl-dev"
     msg_info "Installing dependencies via apk..."
-    sudo apk add --no-cache $apk_pkgs
+    sudo apk add --no-cache "$apk_pkgs"
     msg_ok "apk dependencies installed."
 }
 
@@ -504,7 +504,6 @@ parse_device_info() {
     DEV_SERIAL="$(echo "$output" | grep "Serial:" | sed 's/.*Serial:[[:space:]]*//')"
     DEV_IMEI="$(echo "$output" | grep "IMEI:" | sed 's/.*IMEI:[[:space:]]*//')"
     DEV_CHECKM8="$(echo "$output" | grep "checkm8 vuln:" | sed 's/.*checkm8 vuln:[[:space:]]*//')"
-    DEV_DFU="$(echo "$output" | grep "DFU Mode:" | sed 's/.*DFU Mode:[[:space:]]*//')"
 
     # Fallback: if libusb string descriptor reads time out, parse CPID/ECID
     # from lsusb's iSerial line so the exploit can proceed with --cpid/--ecid.
@@ -658,6 +657,6 @@ gate_support() {
 
     msg_ok "Device is supported. Ready to proceed."
     echo ""
-    printf "${BOLD}Press Enter to start bypass...${RESET}"
+    printf "%sPress Enter to start bypass...%s" "${BOLD}" "${RESET}"
     read -r
 }
